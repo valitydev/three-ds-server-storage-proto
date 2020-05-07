@@ -7,8 +7,8 @@ typedef string Timestamp
 
 /** Карточный диапазон */
 struct CardRange {
-    1: required i64 start
-    2: required i64 end
+    1: required i64 range_start
+    2: required i64 range_end
 }
 
 /** Вспомогательная информация по транзакции */
