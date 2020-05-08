@@ -54,7 +54,4 @@ service RReqTransactionInfoStorage {
 
     /** Запрос на получение информации по транзакции */
     RReqTransactionInfo GetRReqTransactionInfo(1: ThreeDsServerTransactionID transaction_id)
-
-    /** Запрос на удаление информации по транзакции */
-    void ClearRReqTransactionInfo(1: ThreeDsServerTransactionID transaction_id)
 }
