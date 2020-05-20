@@ -19,7 +19,7 @@ struct RReqTransactionInfo {
     4: required string                     acs_dec_con_ind
 }
 
-struct UpdateCardRangesRequest {
+struct InitRBKMoneyPreparationFlowRequest {
     1: required DirectoryServerProviderID provider_id
 }
 
@@ -36,12 +36,12 @@ struct GetCardRangesResponse {
 service CardRangesStorage {
 
     /**
-     * Требование инициировать обмен проприетарными сообщениями между Storage и 3DS Server,
+     * Требование инициировать обмен сообщениями между Storage и 3DS Server,
      * приводящий к обновлению карточных диапазонов в Storage
      *
      * НЕ приводит к обновлению карточных диапазонов в 3DS Server
      */
-    void UpdateCardRanges(1: UpdateCardRangesRequest request)
+    void InitRBKMoneyPreparationFlow(1: InitRBKMoneyPreparationFlowRequest request)
 
     /** Запрос на получение всех карточных диапазонов */
     GetCardRangesResponse GetCardRanges(1: GetCardRangesRequest request)
