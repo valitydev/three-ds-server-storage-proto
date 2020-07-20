@@ -5,6 +5,14 @@ typedef string ThreeDsServerTransactionID
 typedef string DirectoryServerProviderID
 typedef string Timestamp
 
+exception CardRangesNotFound {
+    1: string info
+}
+
+exception ChallengeFlowTransactionInfoNotFound {
+    1: string info
+}
+
 /** Карточный диапазон */
 struct CardRange {
     1: required i64 range_start
@@ -44,7 +52,8 @@ service CardRangesStorage {
     void InitRBKMoneyPreparationFlow(1: InitRBKMoneyPreparationFlowRequest request)
 
     /** Запрос на получение всех карточных диапазонов */
-    GetCardRangesResponse GetCardRanges(1: GetCardRangesRequest request)
+    GetCardRangesResponse GetCardRanges(1: GetCardRangesRequest request) throws (1: CardRangesNotFound ex1)
+
 }
 
 service ChallengeFlowTransactionInfoStorage {
@@ -53,5 +62,6 @@ service ChallengeFlowTransactionInfoStorage {
     void SaveChallengeFlowTransactionInfo(1: ChallengeFlowTransactionInfo transaction_info)
 
     /** Запрос на получение информации по транзакции */
-    ChallengeFlowTransactionInfo GetChallengeFlowTransactionInfo(1: ThreeDsServerTransactionID transaction_id)
+    ChallengeFlowTransactionInfo GetChallengeFlowTransactionInfo(1: ThreeDsServerTransactionID transaction_id) throws (1: ChallengeFlowTransactionInfoNotFound ex1)
+
 }
