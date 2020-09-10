@@ -4,6 +4,7 @@ namespace erlang three_ds_server_storage
 typedef string ThreeDsServerTransactionID
 typedef string DirectoryServerProviderID
 typedef string Timestamp
+typedef string MessageVersion
 
 exception CardRangesNotFound {
     1: string info
@@ -25,10 +26,13 @@ struct ChallengeFlowTransactionInfo {
     2: required string                     device_channel
     3: required Timestamp                  decoupled_auth_max_time
     4: required string                     acs_dec_con_ind
+    5: required DirectoryServerProviderID  provider_id
+    6: required MessageVersion             message_version
 }
 
 struct InitRBKMoneyPreparationFlowRequest {
     1: required DirectoryServerProviderID provider_id
+    2: required MessageVersion            message_version
 }
 
 struct GetCardRangesRequest {
