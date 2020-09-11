@@ -20,21 +20,6 @@ struct CardRange {
     2: required i64 range_end
 }
 
-/** Вспомогательная информация по транзакции */
-struct ChallengeFlowTransactionInfo {
-    1: required ThreeDsServerTransactionID transaction_id
-    2: required string                     device_channel
-    3: required Timestamp                  decoupled_auth_max_time
-    4: required string                     acs_dec_con_ind
-    5: required DirectoryServerProviderID  provider_id
-    6: required MessageVersion             message_version
-}
-
-struct InitRBKMoneyPreparationFlowRequest {
-    1: required DirectoryServerProviderID provider_id
-    2: required MessageVersion            message_version
-}
-
 struct GetCardRangesRequest {
     1: required DirectoryServerProviderID provider_id
 }
@@ -43,6 +28,22 @@ struct GetCardRangesResponse {
     1: required DirectoryServerProviderID provider_id
     2: required Timestamp                 last_updated_at
     3: required list<CardRange>           card_ranges
+}
+
+struct InitRBKMoneyPreparationFlowRequest {
+    1: required DirectoryServerProviderID provider_id
+    2: required MessageVersion            message_version
+}
+
+/** Вспомогательная информация по транзакции */
+struct ChallengeFlowTransactionInfo {
+    1: required ThreeDsServerTransactionID transaction_id
+    2: required string                     device_channel
+    3: required Timestamp                  decoupled_auth_max_time
+    4: required string                     acs_dec_con_ind
+    5: required DirectoryServerProviderID  provider_id
+    6: required MessageVersion             message_version
+    7: required string                     acs_url
 }
 
 service CardRangesStorage {
