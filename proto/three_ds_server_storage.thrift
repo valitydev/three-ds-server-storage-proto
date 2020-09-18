@@ -46,7 +46,7 @@ struct ChallengeFlowTransactionInfo {
     7: required string                     acs_url
 }
 
-service CardRangesStorage {
+service PreparationFlowService {
 
     /**
      * Требование инициировать обмен сообщениями между Storage и 3DS Server,
@@ -55,6 +55,10 @@ service CardRangesStorage {
      * НЕ приводит к обновлению карточных диапазонов в 3DS Server
      */
     void InitRBKMoneyPreparationFlow(1: InitRBKMoneyPreparationFlowRequest request)
+
+}
+
+service CardRangesStorage {
 
     /** Запрос на получение всех карточных диапазонов */
     GetCardRangesResponse GetCardRanges(1: GetCardRangesRequest request) throws (1: CardRangesNotFound ex1)
