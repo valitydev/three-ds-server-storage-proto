@@ -14,26 +14,27 @@ exception ChallengeFlowTransactionInfoNotFound {
     1: string info
 }
 
-/** Карточный диапазон */
-struct CardRange {
-    1: required i64 range_start
-    2: required i64 range_end
-}
-
-struct GetCardRangesRequest {
-    1: required DirectoryServerProviderID provider_id
-}
-
-struct GetCardRangesResponse {
-    1: required DirectoryServerProviderID provider_id
-    2: required Timestamp                 last_updated_at
-    3: required list<CardRange>           card_ranges
-}
-
 struct InitRBKMoneyPreparationFlowRequest {
     1: required DirectoryServerProviderID provider_id
     2: required MessageVersion            message_version
 }
+
+/** Карточный диапазон */
+struct CardRange {
+    1: required i64 range_start
+    2: required i64 range_end
+    3: required Action action
+}
+
+union Action {
+    1: Add add_card_range
+    2: Delete delete_card_range
+    3: Modify modify_card_range
+}
+
+struct Add {}
+struct Delete {}
+struct Modify {}
 
 /** Вспомогательная информация по транзакции */
 struct ChallengeFlowTransactionInfo {
@@ -46,13 +47,10 @@ struct ChallengeFlowTransactionInfo {
     7: required string                     acs_url
 }
 
-service PreparationFlowService {
+service PreparationFlowInitializer {
 
     /**
-     * Требование инициировать обмен сообщениями между Storage и 3DS Server,
-     * приводящий к обновлению карточных диапазонов в Storage
-     *
-     * НЕ приводит к обновлению карточных диапазонов в 3DS Server
+     * Требование к Storage инициировать обновление карточных диапазонов через 3DS Server
      */
     void InitRBKMoneyPreparationFlow(1: InitRBKMoneyPreparationFlowRequest request)
 
@@ -60,8 +58,11 @@ service PreparationFlowService {
 
 service CardRangesStorage {
 
-    /** Запрос на получение всех карточных диапазонов */
-    GetCardRangesResponse GetCardRanges(1: GetCardRangesRequest request) throws (1: CardRangesNotFound ex1)
+    bool IsStorageEmpty(1: DirectoryServerProviderID provider_id)
+
+    bool IsValidCardRanges(1: DirectoryServerProviderID provider_id, 2: list<CardRange> card_ranges)
+
+    bool isInCardRange(1: DirectoryServerProviderID provider_id, 2: i64 account_number)
 
 }
 
