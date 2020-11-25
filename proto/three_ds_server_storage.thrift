@@ -6,35 +6,38 @@ typedef string DirectoryServerProviderID
 typedef string Timestamp
 typedef string MessageVersion
 
-exception CardRangesNotFound {
-    1: string info
+exception ChallengeFlowTransactionInfoNotFound {}
+exception DirectoryServerProviderIDNotFound {}
+
+/** Карточный диапазон */
+struct CardRange {
+    1: required i64     range_start
+    2: required i64     range_end
+    3: required Action  action
+    4: optional string  three_ds_method_url
 }
 
-exception ChallengeFlowTransactionInfoNotFound {
-    1: string info
+union Action {
+    1: Add      add_card_range
+    2: Delete   delete_card_range
+    3: Modify   modify_card_range
 }
+
+struct Add {}
+struct Delete {}
+struct Modify {}
 
 struct InitRBKMoneyPreparationFlowRequest {
     1: required DirectoryServerProviderID provider_id
     2: required MessageVersion            message_version
 }
 
-/** Карточный диапазон */
-struct CardRange {
-    1: required i64 range_start
-    2: required i64 range_end
-    3: required Action action
+struct UpdateCardRangesRequest {
+    1: required DirectoryServerProviderID   provider_id
+    2: required MessageVersion              message_version
+    3: required list<CardRange>             card_ranges
+    4: required string                      serial_number
 }
-
-union Action {
-    1: Add add_card_range
-    2: Delete delete_card_range
-    3: Modify modify_card_range
-}
-
-struct Add {}
-struct Delete {}
-struct Modify {}
 
 /** Вспомогательная информация по транзакции */
 struct ChallengeFlowTransactionInfo {
@@ -58,11 +61,13 @@ service PreparationFlowInitializer {
 
 service CardRangesStorage {
 
+    void updateCardRanges(1: UpdateCardRangesRequest request)
+
     bool IsStorageEmpty(1: DirectoryServerProviderID provider_id)
 
     bool IsValidCardRanges(1: DirectoryServerProviderID provider_id, 2: list<CardRange> card_ranges)
 
-    bool isInCardRange(1: DirectoryServerProviderID provider_id, 2: i64 account_number)
+    DirectoryServerProviderID GetDirectoryServerProviderId(1: i64 account_number) throws (1: DirectoryServerProviderIDNotFound ex1)
 
 }
 
