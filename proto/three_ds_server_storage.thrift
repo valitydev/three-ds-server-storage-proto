@@ -37,6 +37,7 @@ struct UpdateCardRangesRequest {
     2: required MessageVersion              message_version
     3: required list<CardRange>             card_ranges
     4: required string                      serial_number
+    5: required bool                        is_need_storage_clear
 }
 
 /** Вспомогательная информация по транзакции */
