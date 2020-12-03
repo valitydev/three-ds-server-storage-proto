@@ -11,10 +11,15 @@ exception DirectoryServerProviderIDNotFound {}
 
 /** Карточный диапазон */
 struct CardRange {
-    1: required i64     range_start
-    2: required i64     range_end
-    3: required Action  action
-    4: optional string  three_ds_method_url
+    1: required i64             range_start
+    2: required i64             range_end
+    3: required Action          action                      // emvco = optional
+    4: required MessageVersion  acs_start
+    5: required MessageVersion  acs_end
+    6: required MessageVersion  ds_start                    // emvco = optional
+    7: required MessageVersion  ds_end                      // emvco = optional
+    8: optional string          acs_information_indicator   // emvco = optional
+    9: optional string          three_ds_method_url         // emvco = optional
 }
 
 union Action {
@@ -36,9 +41,25 @@ struct UpdateCardRangesRequest {
     1: required DirectoryServerProviderID   provider_id
     2: required MessageVersion              message_version
     3: required list<CardRange>             card_ranges
-    4: required string                      serial_number
-    5: required bool                        is_need_storage_clear
+    4: required bool                        is_need_storage_clear
+    5: optional string                      serial_number
 }
+
+union AccountNumberVersion {
+    1: ThreeDsSecondVersion     three_ds_second_version
+    2: UnsupportedVersion       unsupported_version
+}
+
+struct ThreeDsSecondVersion {
+    1: required DirectoryServerProviderID   provider_id
+    2: required MessageVersion              acs_start
+    3: required MessageVersion              acs_end
+    4: required MessageVersion              ds_start
+    5: required MessageVersion              ds_end
+    6: optional string                      three_ds_method_url
+}
+
+struct UnsupportedVersion {}
 
 /** Вспомогательная информация по транзакции */
 struct ChallengeFlowTransactionInfo {
@@ -69,6 +90,8 @@ service CardRangesStorage {
     bool IsValidCardRanges(1: DirectoryServerProviderID provider_id, 2: list<CardRange> card_ranges)
 
     DirectoryServerProviderID GetDirectoryServerProviderId(1: i64 account_number) throws (1: DirectoryServerProviderIDNotFound ex1)
+
+    AccountNumberVersion GetAccountNumberVersion(1: i64 account_number)
 
 }
 
