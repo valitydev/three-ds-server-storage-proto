@@ -66,7 +66,7 @@ struct ChallengeFlowTransactionInfo {
     1: required ThreeDsServerTransactionID transaction_id
     2: required string                     device_channel
     3: required Timestamp                  decoupled_auth_max_time
-    4: required string                     acs_dec_con_ind
+    4: optional string                     acs_dec_con_ind
     5: required DirectoryServerProviderID  provider_id
     6: required MessageVersion             message_version
     7: required string                     acs_url
