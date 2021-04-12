@@ -70,6 +70,8 @@ struct ChallengeFlowTransactionInfo {
     5: required DirectoryServerProviderID  provider_id
     6: required MessageVersion             message_version
     7: required string                     acs_url
+    8: optional string                     eci                      // emvco = conditional
+    9: optional string                     authentication_value
 }
 
 service PreparationFlowInitializer {

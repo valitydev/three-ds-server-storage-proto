@@ -66,7 +66,7 @@
                 <configuration>
                     <generator>java:fullcamel</generator>
                     <thriftSourceRoot>${project.basedir}/proto</thriftSourceRoot>
-                    <thriftExecutable></thriftExecutable>
+                    <thriftExecutable>${path_to_thrift}</thriftExecutable>
                 </configuration>
                 <executions>
                     <execution>
