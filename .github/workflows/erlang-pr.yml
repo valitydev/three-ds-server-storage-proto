@@ -1,0 +1,37 @@
+name: Erlang
+on:
+  pull_request:
+    branches: [ '*' ]
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build and verify
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: valitydev/action-setup-thrift@b457b89c7e1e960ea354f510bce69a725d16c556
+        with:
+          thrift-version: '0.14.2'
+
+      - uses: erlef/setup-beam@v1.9
+        id: beam
+        with:
+          otp-version: '24'
+          rebar3-version: '3.18'
+
+      - name: Restore PLT cache
+        uses: actions/cache@v2
+        id: plt-cache
+        with:
+          key: |
+            ${{ runner.os }}-${{ steps.beam.outputs.otp-version }}-plt
+          path: |
+            _build/default/rebar3_*_plt
+
+      - run: rebar3 compile
+      - run: rebar3 xref
+      - run: rebar3 dialyzer

@@ -1,4 +1,4 @@
-namespace java com.rbkmoney.damsel.threeds.server.storage
+namespace java dev.vality.damsel.threeds.server.storage
 namespace erlang three_ds_server_storage
 
 typedef string ThreeDsServerTransactionID
