@@ -14,7 +14,7 @@
     <version>${revision}</version>
     <packaging>jar</packaging>
 
-    <name>payout-manager</name>
+    <name>three-ds-server</name>
     <description>Generates jar artifact containing compiled thrift classes based on generated thrift IDL files
     </description>
     <url>https://github.com/valitydev/three-ds-server-storage-proto</url>
