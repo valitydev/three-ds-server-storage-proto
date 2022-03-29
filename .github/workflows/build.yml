@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Install thrift
-        uses: valitydev/action-setup-thrift@v0.0.1
+        uses: valitydev/action-setup-thrift@v0.0.6
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
