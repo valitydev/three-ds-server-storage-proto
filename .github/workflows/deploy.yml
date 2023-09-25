@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Install thrift
-        uses: valitydev/action-setup-thrift@v0.0.1
+        uses: valitydev/action-setup-thrift@v0.0.6
       - name: Checkout Repo
         uses: actions/checkout@v2
         with:
@@ -22,7 +22,7 @@ jobs:
           echo "::set-output name=SHA_7::${GITHUB_SHA::7}"
         id: commit_info
       - name: Deploy package
-        uses: valitydev/action-deploy-jdk-package@v1.0.12
+        uses: valitydev/action-deploy-jdk-package@v1.0.18
         with:
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_TOKEN }}
