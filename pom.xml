@@ -49,7 +49,7 @@
         <dependency>
             <groupId>dev.vality.woody</groupId>
             <artifactId>woody-thrift</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
