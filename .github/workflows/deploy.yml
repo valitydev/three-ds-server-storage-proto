@@ -13,7 +13,7 @@ jobs:
       - name: Install thrift
         uses: valitydev/action-setup-thrift@v0.0.1
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Retrieve commit info
